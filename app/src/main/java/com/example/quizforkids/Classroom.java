@@ -41,13 +41,6 @@ public class Classroom extends AppCompatActivity {
 
         signout = findViewById(R.id.signout1);
         graphView = findViewById(R.id.graph);
-        //series = new LineGraphSeries<DataPoint>();
-        //series = new LineGraphSeries<DataPoint>(getDataPoint());
-        //series.setColor(Color.rgb(40,50,60));
-        //series.setThickness(8);
-        //series.setDrawDataPoints(true);
-        //series.setDataPointsRadius(10);
-        //graphView.addSeries(series);
 
         mAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
