@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "277054964593",
+    "project_id": "quiz-for-kids-e99ed",
+    "storage_bucket": "quiz-for-kids-e99ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:277054964593:android:86c4f0d2f05a28ba562cd0",
+        "android_client_info": {
+          "package_name": "com.example.quizforkids"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "277054964593-crkua66b6m7urh0sftcijhlvtsco59ci.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA521mAfudQbJGtxfA_HCN86FvDpE0Ye6w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "277054964593-crkua66b6m7urh0sftcijhlvtsco59ci.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
