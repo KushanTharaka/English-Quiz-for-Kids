@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuizForKids">
         <activity
+            android:name=".TeacherClasses_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".TeacherMainMenu_Activity"
+            android:exported="false" />
+        <activity
             android:name=".StudentClasses"
             android:exported="false" />
         <activity

@@ -132,7 +132,7 @@ public class Login_Activity extends AppCompatActivity {
 
                                         if (acctype.equals("Teacher")) {
 
-                                            Intent i = new Intent(Login_Activity.this, Classroom.class);
+                                            Intent i = new Intent(Login_Activity.this, TeacherMainMenu_Activity.class);
                                             startActivity(i);
                                             Login_Activity.this.finish();
 

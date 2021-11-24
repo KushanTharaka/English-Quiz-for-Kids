@@ -72,12 +72,30 @@ public class Classroom extends AppCompatActivity {
                                     Map<String, Object> quizavg = (Map<String, Object>) document.getData().get("QuizAvg");
                                     for(int i = 1; i<=(int) quizNo; i++)
                                     {
-                                        long quizmark = (long) quizavg.get("quiz"+j);
-                                        Log.d("TAG", String.valueOf(quizmark));
-                                        x++;
-                                        y = quizmark;
-                                        series.appendData(new DataPoint(x, y), true, (int) quizNo);
+                                        String nameField = ("quiz"+j);
+                                        for (Map.Entry<String, Object> entry : quizavg.entrySet())
+                                        {
+                                            if(entry.getKey().equals(nameField))
+                                            {
+                                                //Map<String, Object> fieldName = (Map<String, Object>) entry.getValue();
+                                                long quizmark = (long) quizavg.get("quiz"+j);
+                                                //long quizmark = (long) entry.getValue();
+                                                //Log.d("TAG", String.valueOf(quizmark));
+                                                x++;
+                                                y = quizmark;
+                                                series.appendData(new DataPoint(x, y), true, (int) quizNo);
+                                            }
+                                        }
                                         j++;
+
+
+//                                        long quizmark = (long) quizavg.get("quiz"+j);
+//                                        Log.d("TAG", String.valueOf(quizmark));
+//                                        x++;
+//                                        y = quizmark;
+//                                        series.appendData(new DataPoint(x, y), true, (int) quizNo);
+//                                        j++;
+
                                     }
                                     series.setThickness(8);
                                     series.setDrawDataPoints(true);
