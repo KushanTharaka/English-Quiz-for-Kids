@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                                 userdetails.setData(email);
 
                                 if (acctype.equals("Teacher")) {
-                                    Intent i = new Intent(MainActivity.this, Classroom.class);
+                                    Intent i = new Intent(MainActivity.this, TeacherMainMenu_Activity.class);
                                     startActivity(i);
                                     MainActivity.this.finish();
                                 } else {

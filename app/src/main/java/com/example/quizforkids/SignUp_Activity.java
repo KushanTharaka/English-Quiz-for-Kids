@@ -20,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -158,23 +160,96 @@ public class SignUp_Activity extends AppCompatActivity {
 
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            DocumentReference df = fStore.collection("Users").document(user.getUid());
-                            Map<String,Object> UserInfo = new HashMap<>();
+                            Map<String, Object> UserInfo = new HashMap<>();
                             UserInfo.put("Full_Name", str_name);
                             UserInfo.put("Email", str_email);
                             UserInfo.put("Account_Type", accType);
-                            df.set(UserInfo);
 
-                            Toast.makeText(SignUp_Activity.this, "Signup Successful !", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
-                            FirebaseAuth.getInstance().signOut();
-                            Intent i = new Intent(getApplicationContext(),Login_Activity.class);
-                            startActivity(i);
-                            finish();
+                            fStore.collection("Users").document(user.getUid())
+                                    .set(UserInfo)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                            if(accType.equals("Teacher"))
+                                            {
+                                                Map<String, Object> teacher = new HashMap<>();
+                                                teacher.put("NoOfClasses", 0);
+
+                                                fStore.collection("Teachers").document(str_email)
+                                                        .set(teacher)
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+
+                                                                Toast.makeText(SignUp_Activity.this, "Signup Successful !", Toast.LENGTH_SHORT).show();
+                                                                progressDialog.dismiss();
+                                                                FirebaseAuth.getInstance().signOut();
+                                                                Intent i = new Intent(getApplicationContext(),Login_Activity.class);
+                                                                startActivity(i);
+                                                                finish();
+
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                                @Override
+                                                                public void onFailure(@NonNull Exception er) {
+
+                                                                    fStore.collection("Users").document(user.getUid())
+                                                                            .delete()
+                                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                @Override
+                                                                                public void onSuccess(Void aVoid) {
+                                                                                    Log.d("Successful", "DocumentSnapshot successfully deleted!");
+                                                                                }
+                                                                            })
+                                                                            .addOnFailureListener(new OnFailureListener() {
+                                                                                @Override
+                                                                                public void onFailure(@NonNull Exception e) {
+                                                                                    Log.w("Unsuccessful", "Error deleting document", e);
+                                                                                }
+                                                                            });
+
+                                                                    user.delete()
+                                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                @Override
+                                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                                    if (task.isSuccessful()) {
+                                                                                        Log.d("Sign up Failed", "User account deleted.");
+                                                                                    }
+                                                                                }
+                                                                            });
+
+                                                                }
+                                                            });
+                                            }
+//                                            else
+//                                            {
+//
+//                                            }
+
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+
+                                            user.delete()
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                Log.d("Sign up Failed", "User account deleted.");
+                                                            }
+                                                        }
+                                                    });
+
+                                        }
+                                    });
 
                         } else {
                             progressDialog.dismiss();
-                            Toast.makeText(SignUp_Activity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignUp_Activity.this, "Failed to Sign up.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

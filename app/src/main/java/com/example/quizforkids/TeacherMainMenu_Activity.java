@@ -29,12 +29,23 @@ public class TeacherMainMenu_Activity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         classesbtn = findViewById(R.id.btnClassestmm);
         profilebtn = findViewById(R.id.btnProfiletmm);
+        classPerformancebtn = findViewById(R.id.btnCLPerfotmm);
 
         classesbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent i = new Intent(getApplicationContext(),TeacherClasses_Activity.class);
+                startActivity(i);
+
+            }
+
+        });
+        classPerformancebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(),Classroom.class);
                 startActivity(i);
 
             }
